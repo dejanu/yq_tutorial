@@ -1,0 +1,128 @@
+cluster:
+  basedomain: mydomain.com
+  scheme: https
+  #port: 443
+  role: admin
+  id: synergy
+adminCluster:
+  basedomain: adminclustersdomain.com
+  scheme: https
+  #port: 443
+  multicluster: false
+  #adminRemoteSecret: ./output/remote-secret-synergy-istio.yaml
+  #selfSignedCA: ../development-environment/certs/ca/ca.crt
+
+postgresDatabase:
+  definitionFile: ./conf/database-clusters.yaml
+
+harbor:
+  adminPassword: Test1234
+
+keycloak:
+  adminName: admin
+  adminPassword: Test1234
+
+gitbucket:
+  adminPassword: Test1234
+
+grafana:
+  allowedDomains: "test.com test-synergy.io"
+
+privateRegistry:
+  name: host.docker.internal:5443
+  adminPassword: Test1234
+  certificate:
+    isSelfSigned: true
+    ca: ./certs/ca/ca.crt
+
+ingressCertificates:
+  certificate: ./certs/cluster/cluster.crt
+  key: ./certs/cluster/cluster.key
+  isSelfSigned: true
+  ca: ./certs/ca/ca.crt
+
+bundleConfig:
+  bootstrap:
+    harborCustomization: ./installation-resources/synergy-bootstrap/harbor-values.yaml
+  istio:
+    istioCustomization: ./installation-resources/synergy-istio/istio-modification.yaml
+    #intermediateCert:
+    #  cacert: ./certs/istio/ca-cert.pem
+    #  cakey: ./certs/istio/ca-key.pem
+    #  certchain: ./certs/istio/cert-chain.pem
+    #  rootcert: ./certs/istio/root-cert.pem
+    synergyIngressGatewayCustomization: ./installation-resources/synergy-istio/synergy-ingress-gateway-customization.yaml
+    applyDefaultSecurityHeaders: true
+    secureByDefaultEnvoyFilter: ./installation-resources/synergy-istio/secure-by-default-headers-envoy-filter.yaml
+  core:
+    egress: ./installation-resources/synergy-core/egress-chart-overrides.yaml
+    keycloakRealmConfigSynergy: ./installation-resources/synergy-core/keycloak-realm-config-synergy.yaml
+    keycloakRoleAdditionSynergy: ./installation-resources/synergy-core/keycloak-role-addition-synergy.yaml
+    vaultExtraConfig: ./installation-resources/synergy-core/vault-extra-config.hcl
+    vaultCustomization: ./installation-resources/synergy-core/vault-chart-overrides.yaml
+    vaultSecretsWebhookCustomization: ./installation-resources/synergy-core/vault-secrets-webhook-chart-overrides.yaml
+    keycloakCustomization: ./installation-resources/synergy-core/keycloak-chart-overrides.yaml
+    toolsConfig: ./installation-resources/synergy-core/tools.yaml
+    synergyOperatorAuditLogForwarderConfiguration: ./installation-resources/synergy-core/synergy-operator-auditlogforwarder-configuration.yaml
+    workerClusterKeycloakRoleAdditions: ./installation-resources/synergy-core/worker-cluster-keycloakroleaddition.yaml
+    #workerClusterCredentials: ./output/worker_credentials.yaml
+    #synergyConsoleLogo: <path to an image file>
+    requestResponseLoggingCustomization: ./installation-resources/synergy-core/request-response-logging-customization.yaml
+    harborProjectsConfig: ./installation-resources/synergy-core/synergy-core-harbor-projects.yaml
+  metallb:
+    metallbCustomization: ./installation-resources/synergy-bootstrap-metallb/metallb-config-customization.yaml
+  acme:
+    acmeCustomization: ./installation-resources/synergy-acme/acme-customization.yaml
+  bootstrapNodeCustomization:
+    nodeCustomization: ./installation-resources/synergy-bootstrap-node-customization/node-customization.yaml
+  logging:
+    opensearchDashboardsCustomization: ./installation-resources/synergy-logging/opensearchDashboardsCustomization.yaml
+    opensearchMasterCustomization: ./installation-resources/synergy-logging/opensearch-values.yaml
+    opensearchDataCustomization: ./installation-resources/synergy-logging/opensearch-data-values.yaml
+    logParser: containerd
+    fluentdCustomization: ./installation-resources/synergy-logging/fluentdCustomization.yaml
+    fluentBitCustomization: ./installation-resources/synergy-logging/fluentBitCustomization.yaml
+  gitops-tenant:
+    globalFluxCustomization: ./installation-resources/synergy-gitops-tenant/global-flux-chart-overrides.yaml
+    globalHelmOperatorCustomization: ./installation-resources/synergy-gitops-tenant/global-helm-operator-chart-overrides.yaml
+    globalHarborProjectCustomization: ./installation-resources/synergy-gitops-tenant/harborprojectconfig-tenant.yaml
+    globalTenantApplicationRoles: ./installation-resources/synergy-gitops-tenant/global-keycloakroleaddition.yaml
+    tenantReadonlyRole: ./installation-resources/synergy-gitops-tenant/role-readonly.yaml
+    tenantAdminRole: ./installation-resources/synergy-gitops-tenant/role-admin.yaml
+  gitops-core:
+    gitbucketCustomization: ./installation-resources/synergy-gitops-core/gitbucket-overrides.yaml 
+  monitoring:
+    prometheusRetention: 10d
+    monitoringCustomization: ./installation-resources/synergy-monitoring/monitoringCustomization.yaml
+    blackboxExporterCustomization: ./installation-resources/synergy-monitoring/blackboxExporterCustomization.yaml
+  bootstrapStorage:
+    rookCephClusterCustomization: ./installation-resources/synergy-bootstrap-storage/rookCephClusterCustomization.yaml
+    rookCephCustomization: ./installation-resources/synergy-bootstrap-storage/rookCephCustomization.yaml
+    objectStorageConfiguration: ./installation-resources/synergy-bootstrap-storage/objectStorageConfiguration.yaml
+    #skipNodeTeardownDuringUninstall: true
+  knative:
+    tlsStrategy: Static
+    knativeServingOverrides: ./installation-resources/synergy-knative/knative-serving-overrides.yaml
+  backup:
+    cleanUpCRDs: false
+    backupLocationConfig: ./installation-resources/synergy-backup/backup-location-config.yaml
+    defaultLocationProvider: self
+    recoveryLocationProvider: azure
+    deployRestic: true
+    resticPasswordPath: ./output/restic-password
+    veleroCustomization: ./installation-resources/synergy-backup/velero-override.yaml
+  argo:
+    egressCustomization: ./installation-resources/synergy-argo/egress-chart-overrides.yaml
+    argocdCustomization: ./installation-resources/synergy-argo/argocd-chart-overrides.yaml
+    keycloakRoleAdditionGit: ./installation-resources/synergy-argo/keycloak-role-addition-gitbucket.yaml
+    keycloakRoleAdditionArgo: ./installation-resources/synergy-argo/keycloak-role-addition-argocd.yaml
+    generateInitialGitRepository: false
+    provideAllClusterAccess: false
+    clusterAccessCustomization: ./installation-resources/synergy-argo/cluster-access-overrides.yaml
+
+sharedBundleConfigFiles:
+  vaultKeys: ./output/vault-keys.json # ./output/WORKERID-vault-keys.json for worker clusters
+  gitbucketKnownHosts: ./output/known_hosts # ./output/WORKERID-known_hosts for worker clusters
+
+storageClass:
+  #standard: selected-storage-class
