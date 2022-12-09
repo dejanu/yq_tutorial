@@ -39,7 +39,7 @@ fi
 
 # if the first option is -c, --content, display the content of the yaml file
 if [ $1 == "-c" ] || [ $1 == "--content" ]; then
-    yq $file
+    yq eval $file
 fi
 
 # if the first option is -k, --keys, display the keys of the yaml file
@@ -68,5 +68,6 @@ if [ $1 == "-vr" ] || [ $1 == "--valuereplace" ]; then
         echo "The key name or the value is missing"
         exit 1
     fi
-    yq 'to_entries | .[] | select(.key == "'$3'") | .value = "'$4'"' $file
+    #yq -i 'to_entries | .[] | select(.key == "'$3'") | .value = "'$4'"' $file
+    yq -i '."'$3'" = "'$4'"' $file
 fi

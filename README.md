@@ -4,10 +4,19 @@ Repo to demo yq usage as a template engine:
 - yq mode is `eval`, which allows reading, searching, and editing YAML files
 - `yq`` parses YAML files in the similar way to tree parsing, dividing the YAML files into different node types, which are nested in one another.
 
+* Install `yq`:
+```bash
+# export VERSION=v4.2.0 and export BINARY=yq_linux_amd64
+# export VERSION=v4.30.5 and export BINARY=yq_linux_amd64
+wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - |\
+tar xz && mv ${BINARY} /usr/bin/yq
+```
+
 * Evaluate a YAML file:
 ```bash
 # output the content of personal_data.yaml
 yq personal_data.yaml
+yq eval personal_data.yaml
 ```
 
 * access data from YAML files:
