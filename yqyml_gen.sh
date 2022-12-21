@@ -7,7 +7,7 @@
 function usage() {
     echo "Usage: $0 [options] [file]"
     echo "Options:"
-    echo "  -h, --help <file>: ask @dejanualex for help"
+    echo "  -h, --help: ask @dejanualex for help"
     echo "  -c, --content <file> : outputs the content of the yaml file"
     echo "  -k, --keys <file>: outputs the keys of the yaml file"
     echo "  -v, --values <file>: outputs the values of the yaml file"

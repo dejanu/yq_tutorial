@@ -1,4 +1,23 @@
 # yq_tutorial
+
+### Wrapper usage:
+
+```bash
+
+# check the content of the yaml file
+./yqyml_gen.sh -c <file>
+
+# outputs the keys of the yaml file
+./yqyml_gen.sh -c <file> -k <file>
+
+# get the value of the key
+./yqyml_gen.sh -kv <file> <key_name>
+
+# replace the value of a certain key
+./yqyml_gen.sh -vr <file> <key_name> <value>
+```
+
+### General stuff
 Repo to demo yq usage as a template engine:
 - in `yq` expressions are made up of operators and pipes
 - yq mode is `eval`, which allows reading, searching, and editing YAML files
@@ -7,12 +26,11 @@ Repo to demo yq usage as a template engine:
 * Install `yq`:
 ```bash
 # export BINARY=yq_linux_amd64
-# export VERSION=v4.30.5 and export BINARY=yq_linux_amd64
+# export VERSION=v4.30.5
 wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - |\
 tar xz && mv ${BINARY} /usr/bin/yq
 
-# Apple MAC chip
-# export VERSION=4.16.2 does not eval by default
+# Apple MAC chip 
 # export BINARY=yq_darwin_arm64
 # follow redirects with L daaam
 curl -L https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz --output yq.tgz
@@ -20,10 +38,14 @@ tar -xvzf yq.tgz
 ```
 
 * Evaluate a YAML file:
+
+    * VERSION=v4.16.2 does not eval by default: try `./yq_version/yq_linux_amd64 personal_data.yml`
 ```bash
 # output the content of personal_data.yaml
 yq personal_data.yaml
-yq eval personal_data.yaml
+
+# needs to be done explicitly for v4.16.2
+yq eval personal_data.yaml 
 ```
 
 * access data from YAML files:
@@ -55,7 +77,6 @@ yq 'to_entries | .[] | .key' personal_data.yaml
 # extract the values of a YAML file
 yq 'to_entries | .[] | .value' personal_data.yaml
 ```
-
 ### Similar tooling
 
 * [CUE](https://cuelang.org/docs/about/) - open-source data validation language and inference engine
