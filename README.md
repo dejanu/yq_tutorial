@@ -2,7 +2,7 @@
 Repo to demo yq usage as a template engine:
 - in `yq` expressions are made up of operators and pipes
 - yq mode is `eval`, which allows reading, searching, and editing YAML files
-- `yq`` parses YAML files in the similar way to tree parsing, dividing the YAML files into different node types, which are nested in one another.
+- `yq` parses YAML files in the similar way to tree parsing, dividing the YAML files into different node types, which are nested in one another.
 
 * Install `yq`:
 ```bash
@@ -55,3 +55,8 @@ yq 'to_entries | .[] | .key' personal_data.yaml
 # extract the values of a YAML file
 yq 'to_entries | .[] | .value' personal_data.yaml
 ```
+
+### Similar tooling
+
+* [CUE](https://cuelang.org/docs/about/) - open-source data validation language and inference engine
+* [jq](https://stedolan.github.io/jq/tutorial/) -  `sed` for JSON, you can use it to slice and filter and map and transform structured data
