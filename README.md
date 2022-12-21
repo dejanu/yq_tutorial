@@ -8,7 +8,7 @@
 ./yqyml_gen.sh -c <file>
 
 # outputs the keys of the yaml file
-./yqyml_gen.sh -c <file> -k <file>
+./yqyml_gen.sh -k <file>
 
 # get the value of the key
 ./yqyml_gen.sh -kv <file> <key_name>
