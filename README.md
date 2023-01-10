@@ -81,3 +81,4 @@ yq 'to_entries | .[] | .value' personal_data.yaml
 
 * [CUE](https://cuelang.org/docs/about/) - open-source data validation language and inference engine
 * [jq](https://stedolan.github.io/jq/tutorial/) -  `sed` for JSON, you can use it to slice and filter and map and transform structured data
+* [templating_YAML](https://learnk8s.io/templating-yaml-with-code)
