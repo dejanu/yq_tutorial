@@ -1,0 +1,14 @@
+# anchor & and aliases *
+Gloin: &dwarf_basics
+  role: Member
+  hood_color: white
+  skills: &skills_base
+    - battle
+    - mining
+
+# merge map
+Oin: 
+  <<: *dwarf_basics
+  
+
+    

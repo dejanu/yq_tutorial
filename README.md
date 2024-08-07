@@ -1,9 +1,10 @@
 # yq_tutorial
 
+[yaml.org](https://yaml.org/)
+
 ### Wrapper usage:
 
 ```bash
-
 # check the content of the yaml file
 ./yqyml_gen.sh -c <file>
 
@@ -76,7 +77,11 @@ yq 'to_entries | .[] | .key' personal_data.yaml
 
 # extract the values of a YAML file
 yq 'to_entries | .[] | .value' personal_data.yaml
+
+# expand anchors and aliases
+yq 'explode(.)'  < hobbit.yaml
 ```
+
 ### Similar tooling
 
 * [CUE](https://cuelang.org/docs/about/) - open-source data validation language and inference engine
